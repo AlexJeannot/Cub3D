@@ -8,9 +8,9 @@ int main()
   int g;
   int b;
 
-  r = 212;
-  g = 112;
-  b = 254;
+  r = 98;
+  g = 165;
+  b = 159;
 
   rgb = r;
   printf("RGB POST R = %d\n", rgb);
