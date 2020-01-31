@@ -192,23 +192,31 @@ void init_texture_array(void)
   win->textures = new_tex_array;
 }
 
-void init_texture(char *path, int w, int h)
+void init_texture(char *path, int index)
 {
   static int i;
   t_image *new_tex;
 
-  if (!i)
-    i = 0;
-
   new_tex = (t_image *)malloc(sizeof(t_image));
 
-  new_tex->width = w;
+  /*new_tex->width = w;
   new_tex->height = h;
   new_tex->size_line = 0;
   new_tex->bpp = 0;
-  new_tex->endian = 0;
+  new_tex->endian = 0;*/
   new_tex->img_ptr = mlx_xpm_file_to_image(win->mlx_ptr, path, &new_tex->width, &new_tex->height);
+
   new_tex->data = mlx_get_data_addr(new_tex->img_ptr, &new_tex->bpp, &new_tex->size_line, &new_tex->endian);
-  win->textures[i] = new_tex;
+  win->textures[index] = new_tex;
+  if (index == 0)
+    config->texture_no = 1;
+  else if (index == 1)
+    config->texture_so = 1;
+  else if (index == 2)
+    config->texture_we = 1;
+  else if (index == 3)
+    config->texture_ea = 1;
+  free(path);
+
   i++;
 }

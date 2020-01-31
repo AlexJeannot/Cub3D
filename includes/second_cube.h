@@ -6,9 +6,13 @@
 # include <string.h>
 # include <math.h>
 # include <time.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include "../libraries/minilibx/mlx.h"
 # include "../libraries/libft/libft.a"
 # include "../get_next_line/get_next_line.h"
+
 
 # define OK 1
 # define KO -1
@@ -47,6 +51,18 @@ typedef struct s_player
   double cam_height;
 //  int health;
 } t_player;
+
+typedef struct s_config
+{
+  int resolution;
+  int texture_no;
+  int texture_so;
+  int texture_we;
+  int texture_ea;
+  int rgb_f;
+  int rgb_c;
+  int map;
+} t_config;
 
 typedef struct s_image
 {
@@ -165,6 +181,7 @@ t_win *win;
 t_ray *ray;
 t_line *line;
 t_draw_sprites *sp;
+t_config *config;
 
 //second_cube
 void draw(void);
