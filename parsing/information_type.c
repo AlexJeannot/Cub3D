@@ -2,34 +2,75 @@
 
 int is_resolution(char *str)
 {
-  if (str[0] == 'R')
+  if (str[0] == 'R' && config->resolution != 0)
       return (OK);
   return (KO);
 }
 
 int is_texture(char *str)
 {
+  int index;
+
   if (str[0] == 'N' && str[1] == 'O')
-    return (0);
+    index = 0;
   else if (str[0] == 'S' && str[1] == 'O')
-    return (1);
+    index = 1;
   else if (str[0] == 'W' && str[1] == 'E')
-    return (2);
+    index = 2;
   else if (str[0] == 'E' && str[1] == 'A')
-    return (3);
-  return (KO);
+    index = 3;
+  else
+    return (KO);
+  if (index == 0 && config->texture_no == 1)
+    exit_game("Texture NORD déjà définie\n");
+  else if (index == 1 && config->texture_so == 1)
+    exit_game("Texture SUD déjà définie\n");
+  else if (index == 2 && config->texture_we == 1)
+    exit_game("Texture OUEST déjà définie\n");
+  else if (index == 3 && config->texture_ea == 1)
+    exit_game("Texture EST déjà définie\n");
+  return (OK);
 }
 
 int is_rgb(char *str)
 {
   if (str[0] == 'F' || str[0] == 'C')
-      return (OK);
+  {
+    if (str[0] == 'F' && config->rgb_f == 1)
+      exit_game("rgb floor already set\n");
+    else if (str[0] == 'C' && config->rgb_c == 1)
+      exit_game("rgb ceiling already set\n");
+    return (OK);
+  }
+  return (KO);
+}
+
+int is_sprite(char *str)
+{
+  if (str[0] == 'S')
+  {
+    if (config->sprite == 1)
+      exit_game("sprite already set\n");
+    return (OK);
+  }
   return (KO);
 }
 
 int is_map(char *str)
 {
-  if (str[0] == '1')
+  if (config->map == 1)
+  {
+    if (str[0] == '1')
       return (OK);
-  return (KO);
+    else
+      exit_game("ligne de map non conforme");
+    return (KO);
+  }
+  else
+  {
+    if (str[0] == '1')
+      return (OK);
+    else
+      return (KO);
+  }
 }

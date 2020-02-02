@@ -1,16 +1,11 @@
 #include "../includes/second_cube.h"
 
-void set_sprite(char *path, int w, int h)
+void set_sprite(char *path)
 {
   t_image *new_sprite;
 
   new_sprite = malloc(sizeof(t_image));
 
-  new_sprite->width = w;
-  new_sprite->height = h;
-  new_sprite->size_line = 0;
-  new_sprite->bpp = 0;
-  new_sprite->endian = 0;
   new_sprite->img_ptr = mlx_xpm_file_to_image(win->mlx_ptr, path, &new_sprite->width, &new_sprite->height);
   new_sprite->data = mlx_get_data_addr(new_sprite->img_ptr, &new_sprite->bpp, &new_sprite->size_line, &new_sprite->endian);
 

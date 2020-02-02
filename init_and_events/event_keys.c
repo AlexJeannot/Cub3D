@@ -44,7 +44,7 @@ int		key_pressed(int key)
 int		key_manager(void)
 {
 	if (win->keybuffer->exit == 1)
-    exit_game();
+    exit_game(NULL);
 	if (win->keybuffer->toward == 1)
 		move_forward();
 	if (win->keybuffer->backward == 1)

@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 
-int		get_next_line(int fd, char **line);
+int		get_next_line(int fd, char *line);
 int		ft_len(char *str);
 char	*ft_dup(const char *str, int len, void *free_str);
 int		ft_search(char *str);

@@ -9,8 +9,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include "../libraries/minilibx/mlx.h"
-# include "../libraries/libft/libft.a"
+//# include "../libraries/minilibx/mlx.h"
+//# include "../libraries/libft/libft.a"
 # include "../get_next_line/get_next_line.h"
 
 
@@ -20,6 +20,7 @@
 typedef struct s_map
 {
   char **map;
+  char *map_str;
   const char *map_name;
   int width;
   int height;
@@ -61,7 +62,9 @@ typedef struct s_config
   int texture_ea;
   int rgb_f;
   int rgb_c;
+  int sprite;
   int map;
+  int player_position;
 } t_config;
 
 typedef struct s_image
@@ -220,7 +223,7 @@ int		key_manager(void);
 
 //event_window.c
 int		end_game(int key);
-void exit_game(void);
+void exit_game(char *str);
 
 //init_struct
 void init(void);
@@ -228,7 +231,7 @@ void init_map(void);
 void init_keybuffer(void);
 void init_player(void);
 void init_image(void);
-void init_texture(char *path, int w, int h);
+void init_texture(char *path, int index);
 void init_texture_array(void);
 
 //init_struct_2
@@ -248,12 +251,51 @@ void	move_left(void);
 void	move_right(void);
 
 //manage_sprites
-void set_sprite(char *path, int w, int h);
+void set_sprite(char *path);
 void add_displayable_sprite(void);
 void sort_displayable_sprites(void);
 void delete_diplayed_sprites(void);
 void into_list(void);
 
+
+/*PARSING*/
+//check_error.c
+int check_arg(char *str);
+int check_open_config(char *path);
+int check_error_rgb_value(int color_value, char color, char type);
+int check_coma_between_rgb(char c, char color, char type);
+void error_before_rgb_value(int color, char type);
+void check_map_error(void);
+void check_top_and_bottom_map(int limit);
+void check_all_config_elem_before_map(void);
+
+//information_type
+int is_resolution(char *str);
+int is_texture(char *str);
+int is_rgb(char *str);
+int is_sprite(char *str);
+int is_map(char *str);
+
+//parsing_config.c
+void init_config(void);
+int parse_config(char *path);
+void parse_resolution(char *str);
+void parse_texture(char *str, int index);
+int create_rgb(int color_value, char color, char type);
+void parse_rgb(char *str);
+void parse_sprite(char *str);
+void parse_map(char *str);
+void map_into_array(void);
+int set_player_position(int x, int y, char orientation);
+void set_player_dir_n_or_s(char orientation);
+void set_player_dir_e_or_w(char orientation);
+
+
+/*ANNEXES*/
+//annexes.c
+int	ft_atoi_cub(const char *nb);
+char	*ft_strjoin_cub(char *str_1, char *str_2, int len_1, int len_2);
+int ft_strlen(char *str);
 
 
 
