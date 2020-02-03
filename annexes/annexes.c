@@ -7,7 +7,6 @@ int	ft_atoi_cub(const char *nb)
 
 	cmp = 0;
 	nb_final = 0;
-
   while (nb[cmp] > 47 && nb[cmp] < 58)
     {
     	nb_final = (nb_final * 10) + (nb[cmp] - 48);
@@ -21,19 +20,16 @@ char	*ft_strjoin_cub(char *str_1, char *str_2, int len_1, int len_2)
 	int		cmp;
 	char	*output_str;
 
-//	printf("ENTRE CFT JOIN\n");
 	if (!(output_str = (char *)malloc(sizeof(char) * (len_1 + len_2 + 2))))
     return (NULL);
 	cmp = 0;
 	if (str_1)
 		while (str_1[cmp])
 		{
-//			printf("BOUCLE 1\ncmp = %d\nstr_1[cmp] = %c\n", cmp, str_1[cmp]);
 			output_str[cmp] = str_1[cmp];
 			cmp++;
 		}
 	cmp = 0;
-//	printf("EN?TRE DEUX JOIN\n");
 	while (str_2[cmp])
 	{
 		output_str[cmp + len_1] = str_2[cmp];

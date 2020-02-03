@@ -165,9 +165,6 @@ typedef struct s_win
   int floor_color;
   int ceiling_color;
   int wall_color;
-//  int is_save;
-//  int map_desc_found;
-//  int after_found;
   t_map *my_map;
   t_keybuffer *keybuffer;
   t_player *player;
@@ -176,7 +173,6 @@ typedef struct s_win
   t_image *sprite;
   t_sprites *displayable_sprite;
   int have_sprite;
-//  t_sound *sound;
 } t_win;
 
 
@@ -264,7 +260,8 @@ int check_arg(char *str);
 int check_open_config(char *path);
 int check_error_rgb_value(int color_value, char color, char type);
 int check_coma_between_rgb(char c, char color, char type);
-void error_before_rgb_value(int color, char type);
+void error_before_rgb_value(char wrong_c, char color, char type);
+void minus_before_rgb_value(char color, char type);
 void check_map_error(void);
 void check_top_and_bottom_map(int limit);
 void check_all_config_elem_before_map(void);
