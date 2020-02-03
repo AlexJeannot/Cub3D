@@ -1,6 +1,6 @@
 #include "../includes/second_cube.h"
 
-int		end_game(int key)
+int		end_game(void)
 {
   exit_game(NULL);
   return (1);
@@ -8,7 +8,16 @@ int		end_game(int key)
 
 void exit_game(char *str)
 {
+  int cmp;
+
+  cmp = 0;
   if (str)
-    write(1, &str, ft_strlen(str));
+  {
+      while (str[cmp])
+      {
+        write(1, &str[cmp], 1);
+        cmp++;
+      }
+  }
   exit(1);
 }

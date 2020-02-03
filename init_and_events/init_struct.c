@@ -24,7 +24,7 @@ void init_map(void)
   new_elem = (t_map *)malloc(sizeof(t_map));
   win->my_map = new_elem;
 
-  char **str_map;
+  /*char **str_map;
   char *str_1;
   char *str_2;
   char *str_3;
@@ -125,12 +125,12 @@ void init_map(void)
   str_map[20] = str_21;
   str_map[21] = str_22;
   str_map[22] = str_23;
-  str_map[23] = str_24;
+  str_map[23] = str_24;*/
 
-  win->my_map->map = str_map;
+  win->my_map->map_str = NULL;
   win->my_map->map_name = "TEST";
-  win->my_map->width = 24;
-  win->my_map->height = 24;
+  win->my_map->width = 0;
+  win->my_map->height = 0;
 }
 
 void init_keybuffer(void)

@@ -1,6 +1,6 @@
 #include "../includes/second_cube.h"
 
-static void			calcul_values()
+void			calcul_values(void)
 {
 
 	sp->inv_det = 1.0 / (win->player->plane_x * win->player->dir_y - win->player->dir_x * win->player->plane_y);
@@ -54,7 +54,7 @@ static void			calcul_values()
 	sp->stripe = sp->draw_start_x;
 }
 
-static void			pix_on_sprite_image(void)
+void			pix_on_sprite_image(void)
 {
 	sp->d = sp->y * win->sprite->size_line - (win->height * win->player->cam_height) * (win->sprite->size_line / 2) + sp->sprite_height * win->sprite->size_line / 2;
 	sp->tex_y = ((sp->d * win->sprite->height) / sp->sprite_height) / win->sprite->size_line;
@@ -63,7 +63,7 @@ static void			pix_on_sprite_image(void)
    + win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8 + 2];
 }
 
-static void			is_black(void)
+void			is_black(void)
 {
 	win->img->data[sp->y * win->img->size_line + sp->stripe * win->img->bpp / 8] = win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8];
 	win->img->data[sp->y * win->img->size_line + sp->stripe * win->img->bpp / 8 + 1] = win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8 + 1];

@@ -39,7 +39,7 @@ char	*ft_join(char *str_1, char *str_2, int len_1, int len_2)
 	return (output_str);
 }
 
-int		ft_error(int fd, char *line)
+int		ft_error(int fd)
 {
 	char	check_str[1];
 
@@ -58,7 +58,7 @@ int		ft_id(char *str)
 	return (cmp);
 }
 
-int		get_next_line(int fd, char *line)
+int		get_next_line(int fd, char **line)
 {
 	static char	*str;
 	int			ret;
@@ -66,7 +66,7 @@ int		get_next_line(int fd, char *line)
 	int			pass;
 
 	pass = 0;
-	if (ft_error(fd, line) == -1)
+	if (ft_error(fd) == -1)
 		return (-1);
 	while ((ret = read(fd, buf, 20)) > 0)
 	{
@@ -78,11 +78,11 @@ int		get_next_line(int fd, char *line)
 	}
 	if (str && str[0] && ft_search(str) != -1)
 	{
-		line = ft_dup(str, ft_id(str), NULL);
+		*line = ft_dup(str, ft_id(str), NULL);
 		str = ft_dup(&str[ft_id(str) + 1], ft_len(&str[ft_id(str) + 1]), str);
 		return (1);
 	}
-	line = ft_dup(str, ft_id(str), NULL);
+	*line = ft_dup(str, ft_id(str), NULL);
 	str = ft_settle(str, pass);
 	return (0);
 }

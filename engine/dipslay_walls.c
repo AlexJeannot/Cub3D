@@ -1,6 +1,6 @@
 #include "../includes/second_cube.h"
 
-static void	texture_on_img(int x, int y)
+void	texture_on_img(int x, int y)
 {
 	int d;
   int tex_y;
@@ -12,7 +12,7 @@ static void	texture_on_img(int x, int y)
     text = win->textures[2];
   else if (ray->side == 2)
     text = win->textures[1];
-  else if (ray->side == 3)
+  else
     text = win->textures[0];
 
   int tex_x;

@@ -192,7 +192,8 @@ int loop(void)
 
 int main(int argc, char **argv)
 {
-  parse_config(argv[1]);
+  printf("ENTREE ENFIN\n");
+  (void)argc;
   init();
 
   init_map();
@@ -204,13 +205,15 @@ int main(int argc, char **argv)
   init_image();
 
   init_texture_array();
-  init_texture("./textures/bluestone.xpm", 64, 64); // nord
+  printf("AVANT PARSE CONFIG\n");
+  parse_config(argv[1]);
+  printf("APRES PARSE CONFIG\n");
+  /*init_texture("./textures/bluestone.xpm", 64, 64); // nord
   init_texture("./textures/eagle.xpm", 64, 64);// sud
   init_texture("./textures/mossy.xpm", 64, 64); // ouest
-  init_texture("./textures/purplestone.xpm", 64, 64); // est
+  init_texture("./textures/purplestone.xpm", 64, 64); // est*/
 
   //init_sprite();
-  set_sprite("./textures/dbz_sprite.xpm", 64, 64);
 
   mlx_hook(win->win_ptr, 2, 0, key_pressed, win);
   mlx_hook(win->win_ptr, 3, 0, key_released, win);

@@ -9,7 +9,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-//# include "../libraries/minilibx/mlx.h"
+# include "../libraries/minilibx/mlx.h"
 //# include "../libraries/libft/libft.a"
 # include "../get_next_line/get_next_line.h"
 
@@ -193,7 +193,7 @@ int loop(void);
 
 /* ENGINE */
 //display_wall
-static void	texture_on_img(int x, int y);
+void	texture_on_img(int x, int y);
 void vert_tex(int y0, int y1);
 
 //display_floor_and_ceiling
@@ -201,9 +201,9 @@ void		pixel_put_to_image(int color, int x, int y);
 void vert(int color, int y0, int y1);
 
 //display_sprite
-static void			calcul_values();
-static void			pix_on_sprite_image(void);
-static void			is_black(void);
+void			calcul_values(void);
+void			pix_on_sprite_image(void);
+void			is_black(void);
 void draw_sprite(t_sprite_list *sprite_pos);
 void diplay_sprite(void);
 
@@ -222,7 +222,7 @@ int		key_pressed(int key);
 int		key_manager(void);
 
 //event_window.c
-int		end_game(int key);
+int		end_game(void);
 void exit_game(char *str);
 
 //init_struct
@@ -281,7 +281,7 @@ void init_config(void);
 int parse_config(char *path);
 void parse_resolution(char *str);
 void parse_texture(char *str, int index);
-int create_rgb(int color_value, char color, char type);
+int create_rgb(int color_value, int rgb, char color, char type);
 void parse_rgb(char *str);
 void parse_sprite(char *str);
 void parse_map(char *str);
@@ -296,7 +296,7 @@ void set_player_dir_e_or_w(char orientation);
 int	ft_atoi_cub(const char *nb);
 char	*ft_strjoin_cub(char *str_1, char *str_2, int len_1, int len_2);
 int ft_strlen(char *str);
-
+int ft_strlen_without_space(char *str);
 
 
 
