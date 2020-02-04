@@ -1,27 +1,23 @@
-#include "../includes/second_cube.h"
+#include "../includes/cub3D.h"
 
 int is_map(char *str)
 {
   int cmp;
 
   cmp = 0;
-  while (str[cmp] == ' ')
-    cmp++;
+  cmp += browse_space(&str[cmp]);
   if (config->map == 1)
   {
     if (str[cmp] == '1')
       return (OK);
     else
-      exit_game("ligne de map non conforme");
+      exit_game("Error\nMap line beginning by a invalid caracter\n");
     return (KO);
   }
   else
-  {
     if (str[cmp] == '1')
       return (OK);
-    else
-      return (KO);
-  }
+  return (KO);
 }
 
 void parse_map(char *str)
@@ -32,13 +28,13 @@ void parse_map(char *str)
   if (config->map == 0)
   {
     check_all_config_elem_before_map();
-    win->my_map->map_str = ft_strjoin_cub(win->my_map->map_str, str, ft_strlen(win->my_map->map_str), ft_strlen(str));
-    win->my_map->width = ft_strlen_without_space(str);
+    map->map_str = ft_strjoin_cub(map->map_str, str, ft_strlen(map->map_str), ft_strlen(str));
+    map->width = ft_strlen_without_space(str);
     config->map = 1;
   }
   else
-    win->my_map->map_str = ft_strjoin_cub(win->my_map->map_str, str, ft_strlen(win->my_map->map_str), ft_strlen(str));
-  win->my_map->height++;
+    map->map_str = ft_strjoin_cub(map->map_str, str, ft_strlen(map->map_str), ft_strlen(str));
+  map->height++;
 }
 
 void map_into_array(void)
@@ -48,18 +44,21 @@ void map_into_array(void)
   int cmp_global;
   char **map_array;
   char *map_str;
+
   cmp_array = 0;
   cmp_global = 0;
-  map_array = malloc(sizeof(char *) * win->my_map->height);
-  while (cmp_array < win->my_map->height)
+  if (!(map_array = malloc(sizeof(char *) * map->height)))
+    exit_game("Error\nMemory allocation error\n");
+  while (cmp_array < map->height)
   {
     cmp_str = 0;
-    map_str = malloc(sizeof(char) * (win->my_map->width + 1));
-    while (cmp_str < win->my_map->width)
+    if (!(map_str = malloc(sizeof(char) * (map->width + 1))))
+      exit_game("Error\nMemory allocation error\n");
+    while (cmp_str < map->width)
     {
-      while (win->my_map->map_str[cmp_global] == ' ' || win->my_map->map_str[cmp_global] == '\n')
+      while (map->map_str[cmp_global] == ' ' || map->map_str[cmp_global] == '\n')
         cmp_global++;
-      map_str[cmp_str] = win->my_map->map_str[cmp_global];
+      map_str[cmp_str] = map->map_str[cmp_global];
       cmp_str++;
       cmp_global++;
     }
@@ -68,6 +67,6 @@ void map_into_array(void)
     cmp_array++;
     cmp_global++;
   }
-  win->my_map->map = map_array;
-  free(win->my_map->map_str);
+  map->map_array = map_array;
+  free(map->map_str);
 }

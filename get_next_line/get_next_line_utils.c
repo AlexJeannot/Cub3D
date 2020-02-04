@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajeannot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ajeannot <ajeannot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:00:36 by ajeannot          #+#    #+#             */
-/*   Updated: 2019/11/30 15:50:24 by ajeannot         ###   ########.fr       */
+/*   Updated: 2020/02/04 16:37:47 by ajeannot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,13 @@ char	*ft_dup(const char *str, int len, void *free_str)
 	if (!str)
 	{
 		if (!(new_str = (char *)malloc(sizeof(char) * 1)))
-			return (NULL);
+    	return (NULL);
 		new_str[0] = '\0';
 	}
 	else
 	{
-		new_str = (char *)malloc(sizeof(char) * (len + 1));
-		if (new_str == NULL)
-			return (NULL);
+		if (!(new_str = (char *)malloc(sizeof(char) * (len + 1))))
+    	return (NULL);
 		cmp = 0;
 		while (cmp < len)
 		{

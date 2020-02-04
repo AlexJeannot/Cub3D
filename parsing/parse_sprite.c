@@ -1,46 +1,57 @@
-#include "../includes/second_cube.h"
+#include "../includes/cub3D.h"
 
 int is_sprite(char *str)
 {
   if (str[0] == 'S')
   {
     if (config->sprite == 1)
-      exit_game("sprite already set\n");
+      exit_game("Error\nSprite texture already defined\n");
     return (OK);
   }
   return (KO);
 }
 
-void parse_sprite(char *str)
+void sprite_extension(char *str)
 {
-  int cmp;
-  int cmp_2;
   int len;
-  char *path;
 
-  cmp = 1;
   len = ft_strlen(str);
   if (str[len - 4] != '.' && str[len - 3] != 'x' && str[len - 2] != 'p' && str[len - 1] != 'm')
-    exit_game("Extension du fichier de sprite invalide\nExtension attendue : .xpm");
-  while (str[cmp] == ' ')
-    cmp++;
-  cmp_2 = 0;
-  if (str[cmp] == '.')
+    exit_game("Error\nInvalid sprite texture file extension\nExpected etension : .xpm\n");
+}
+
+void open_sprite_file(char *path)
+{
+  if (open(path, O_RDONLY) == -1)
+    exit_game("Error\nSprite texture file can't be open\n");
+  else
+    init_sprite(path);
+}
+
+void parse_sprite(char *str)
+{
+  int cmp_str;
+  int cmp_path;
+  char *path;
+
+  cmp_path = 0;
+  cmp_str = 1;
+  sprite_extension(str);
+  cmp_str += browse_space(&str[cmp_str]);
+  if (str[cmp_str] == '.')
   {
-    path = (char *)malloc(sizeof(char) * (len - cmp + 1));
-    while (str[cmp] >= ' ' && str[cmp] <= '~')
+    if (!(path = (char *)malloc(sizeof(char) * (ft_strlen(str) - cmp_str + 1))))
+      exit_game("Error\nMemory allocation error\n");
+    while (str[cmp_str] >= ' ' && str[cmp_str] <= '~')
     {
-      path[cmp_2] = str[cmp];
-      cmp_2++;
-      cmp++;
+      path[cmp_path] = str[cmp_str];
+      cmp_path++;
+      cmp_str++;
     }
-    path[cmp_2] = '\0';
-    if (open(path, O_RDONLY) == -1)
-      exit_game("Fichier de sprite introuvable\n");
-    else
-      set_sprite(path);
+    path[cmp_path] = '\0';
+    open_sprite_file(path);
   }
   else
-    exit_game("caractere entre indice et path\n");
+    exit_game("Error\nInvalid caracter before sprite texture file path\n");
   config->sprite = 1;
 }

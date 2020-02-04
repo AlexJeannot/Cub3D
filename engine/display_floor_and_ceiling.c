@@ -1,6 +1,6 @@
-#include "../includes/second_cube.h"
+#include "../includes/cub3D.h"
 
-void		pixel_put_to_image(int color, int x, int y)
+void		display_pixel_color(int color, int x, int y)
 {
 	unsigned char *src;
 	unsigned char r;
@@ -12,19 +12,17 @@ void		pixel_put_to_image(int color, int x, int y)
 	g = src[1];
 	b = src[2];
 
-	win->img->data[y * win->img->size_line + x * win->img->bpp / 8] = r;
-	win->img->data[y * win->img->size_line + x * win->img->bpp / 8 + 1] = g;
-	win->img->data[y * win->img->size_line + x * win->img->bpp / 8 + 2] = b;
+	img->data[y * img->size_line + x * img->bpp / 8] = r;
+	img->data[y * img->size_line + x * img->bpp / 8 + 1] = g;
+	img->data[y * img->size_line + x * img->bpp / 8 + 2] = b;
 }
 
-void vert(int color, int y0, int y1)
+void display_vertical_color(int color, int y_start, int y_end)
 {
-  if (y0 >= 0)
-  {
-    while (y0 < y1)
+  if (y_start >= 0)
+    while (y_start < y_end)
     {
-      pixel_put_to_image(color, ray->pix, y0);
-      y0++;
+      display_pixel_color(color, ray->line_x, y_start);
+      y_start++;
     }
-  }
 }

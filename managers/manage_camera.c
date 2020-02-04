@@ -1,27 +1,27 @@
-#include "../includes/second_cube.h"
+#include "../includes/cub3D.h"
 
 void	turn_left(void)
 {
-	double olddirx;
-	double oldplanex;
+	double previous_dir_x;
+	double previous_plane_x;
 
-	olddirx = win->player->dir_x;
-	oldplanex = win->player->plane_x;
-	win->player->dir_x = win->player->dir_x * cos(-win->player->rotate_speed) - win->player->dir_y * sin(-win->player->rotate_speed);
-	win->player->dir_y = olddirx * sin(-win->player->rotate_speed) + win->player->dir_y * cos(-win->player->rotate_speed);
-	win->player->plane_x = win->player->plane_x * cos(-win->player->rotate_speed) - win->player->plane_y * sin(-win->player->rotate_speed);
-	win->player->plane_y = oldplanex * sin(-win->player->rotate_speed) + win->player->plane_y * cos(-win->player->rotate_speed);
+	previous_dir_x = player->dir_x;
+	previous_plane_x = player->plane_x;
+	player->dir_x = player->dir_x * cos(-player->rotate_speed) - player->dir_y * sin(-player->rotate_speed);
+	player->dir_y = previous_dir_x * sin(-player->rotate_speed) + player->dir_y * cos(-player->rotate_speed);
+	player->plane_x = player->plane_x * cos(-player->rotate_speed) - player->plane_y * sin(-player->rotate_speed);
+	player->plane_y = previous_plane_x * sin(-player->rotate_speed) + player->plane_y * cos(-player->rotate_speed);
 }
 
 void	turn_right(void)
 {
-	double olddirx;
-	double oldplanex;
+	double previous_dir_x;
+	double previous_plane_x;
 
-	olddirx = win->player->dir_x;
-	oldplanex = win->player->plane_x;
-	win->player->dir_x = win->player->dir_x * cos(win->player->rotate_speed) - win->player->dir_y * sin(win->player->rotate_speed);
-	win->player->dir_y = olddirx * sin(win->player->rotate_speed) + win->player->dir_y * cos(win->player->rotate_speed);
-	win->player->plane_x = win->player->plane_x * cos(win->player->rotate_speed) - win->player->plane_y * sin(win->player->rotate_speed);
-	win->player->plane_y = oldplanex * sin(win->player->rotate_speed) + win->player->plane_y * cos(win->player->rotate_speed);
+	previous_dir_x = player->dir_x;
+	previous_plane_x = player->plane_x;
+	player->dir_x = player->dir_x * cos(player->rotate_speed) - player->dir_y * sin(player->rotate_speed);
+	player->dir_y = previous_dir_x * sin(player->rotate_speed) + player->dir_y * cos(player->rotate_speed);
+	player->plane_x = player->plane_x * cos(player->rotate_speed) - player->plane_y * sin(player->rotate_speed);
+	player->plane_y = previous_plane_x * sin(player->rotate_speed) + player->plane_y * cos(player->rotate_speed);
 }

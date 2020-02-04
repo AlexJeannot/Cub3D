@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajeannot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ajeannot <ajeannot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:20:24 by ajeannot          #+#    #+#             */
-/*   Updated: 2019/11/30 15:50:25 by ajeannot         ###   ########.fr       */
+/*   Updated: 2020/02/04 16:37:19 by ajeannot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ char	*ft_join(char *str_1, char *str_2, int len_1, int len_2)
 	int		cmp;
 	char	*output_str;
 
-	output_str = (char *)malloc(sizeof(char) * (len_1 + len_2 + 1));
-	if (output_str == NULL)
+	if (!(output_str = (char *)malloc(sizeof(char) * (len_1 + len_2 + 1))))
 		return (NULL);
 	cmp = 0;
 	if (str_1)

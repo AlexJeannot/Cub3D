@@ -1,96 +1,96 @@
-#include "../includes/second_cube.h"
+#include "../includes/cub3D.h"
 
 void			calcul_values(void)
 {
 
-	sp->inv_det = 1.0 / (win->player->plane_x * win->player->dir_y - win->player->dir_x * win->player->plane_y);
+	s_draw->inv_det = 1.0 / (player->plane_x * player->dir_y - player->dir_x * player->plane_y);
 
-	sp->transform_x = sp->inv_det * (win->player->dir_y * sp->sprite_x - win->player->dir_x * sp->sprite_y);
+	s_draw->transform_x = s_draw->inv_det * (player->dir_y * s_draw->sprite_x - player->dir_x * s_draw->sprite_y);
 
-	sp->transform_y = sp->inv_det * (-win->player->plane_y * sp->sprite_x + win->player->plane_x * sp->sprite_y);
+	s_draw->transform_y = s_draw->inv_det * (-player->plane_y * s_draw->sprite_x + player->plane_x * s_draw->sprite_y);
 
-	sp->sprite_screen_x = (int)((win->width / 2) * (1 + sp->transform_x / sp->transform_y));
+	s_draw->sprite_screen_x = (int)((win->width / 2) * (1 + s_draw->transform_x / s_draw->transform_y));
 
-	sp->sprite_height = abs((int)(win->height / sp->transform_y));
+	s_draw->sprite_height = abs((int)(win->height / s_draw->transform_y));
 
-	sp->draw_start_y = -sp->sprite_height / 2 + ((win->height / 2) * win->player->cam_height);
+	s_draw->draw_start_y = -s_draw->sprite_height / 2 + ((win->height / 2) * player->cam_height);
 
 
-  if (sp->draw_start_y < 0)
+  if (s_draw->draw_start_y < 0)
   {
-		sp->draw_start_y = 0;
+		s_draw->draw_start_y = 0;
   }
 
 
-	sp->draw_end_y = sp->sprite_height / 2 + ((win->height / 2) * win->player->cam_height);
+	s_draw->draw_end_y = s_draw->sprite_height / 2 + ((win->height / 2) * player->cam_height);
 
 
-	if (sp->draw_end_y >= win->height)
+	if (s_draw->draw_end_y >= win->height)
   {
-		sp->draw_end_y = win->height - 1;
+		s_draw->draw_end_y = win->height - 1;
   }
 
 
-	sp->sprite_width = abs((int)(win->height / sp->transform_y));
+	s_draw->sprite_width = abs((int)(win->height / s_draw->transform_y));
 
-	sp->draw_start_x = -sp->sprite_width / 2 + sp->sprite_screen_x;
+	s_draw->draw_start_x = -s_draw->sprite_width / 2 + s_draw->sprite_screen_x;
 
 
-	if (sp->draw_start_x < 0)
+	if (s_draw->draw_start_x < 0)
   {
-		sp->draw_start_x = 0;
+		s_draw->draw_start_x = 0;
   }
 
 
-	sp->draw_end_x = sp->sprite_width / 2 + sp->sprite_screen_x;
+	s_draw->draw_end_x = s_draw->sprite_width / 2 + s_draw->sprite_screen_x;
 
 
-	if (sp->draw_end_x >= win->width)
+	if (s_draw->draw_end_x >= win->width)
   {
-		sp->draw_end_x = win->width - 1;
+		s_draw->draw_end_x = win->width - 1;
   }
 
 
-	sp->stripe = sp->draw_start_x;
+	s_draw->stripe = s_draw->draw_start_x;
 }
 
 void			pix_on_sprite_image(void)
 {
-	sp->d = sp->y * win->sprite->size_line - (win->height * win->player->cam_height) * (win->sprite->size_line / 2) + sp->sprite_height * win->sprite->size_line / 2;
-	sp->tex_y = ((sp->d * win->sprite->height) / sp->sprite_height) / win->sprite->size_line;
-	sp->totcolor = win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8]
-   + win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8 + 1]
-   + win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8 + 2];
+	s_draw->d = s_draw->y * s_texture->size_line - (win->height * player->cam_height) * (s_texture->size_line / 2) + s_draw->sprite_height * s_texture->size_line / 2;
+	s_draw->tex_y = ((s_draw->d * s_texture->height) / s_draw->sprite_height) / s_texture->size_line;
+	s_draw->totcolor = s_texture->data[s_draw->tex_y * s_texture->size_line + s_draw->tex_x * s_texture->bpp / 8]
+   + s_texture->data[s_draw->tex_y * s_texture->size_line + s_draw->tex_x * s_texture->bpp / 8 + 1]
+   + s_texture->data[s_draw->tex_y * s_texture->size_line + s_draw->tex_x * s_texture->bpp / 8 + 2];
 }
 
 void			is_black(void)
 {
-	win->img->data[sp->y * win->img->size_line + sp->stripe * win->img->bpp / 8] = win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8];
-	win->img->data[sp->y * win->img->size_line + sp->stripe * win->img->bpp / 8 + 1] = win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8 + 1];
-	win->img->data[sp->y * win->img->size_line + sp->stripe * win->img->bpp / 8 + 2] = win->sprite->data[sp->tex_y * win->sprite->size_line + sp->tex_x * win->sprite->bpp / 8 + 2];
+	img->data[s_draw->y * img->size_line + s_draw->stripe * img->bpp / 8] = s_texture->data[s_draw->tex_y * s_texture->size_line + s_draw->tex_x * s_texture->bpp / 8];
+	img->data[s_draw->y * img->size_line + s_draw->stripe * img->bpp / 8 + 1] = s_texture->data[s_draw->tex_y * s_texture->size_line + s_draw->tex_x * s_texture->bpp / 8 + 1];
+	img->data[s_draw->y * img->size_line + s_draw->stripe * img->bpp / 8 + 2] = s_texture->data[s_draw->tex_y * s_texture->size_line + s_draw->tex_x * s_texture->bpp / 8 + 2];
 }
 
-void draw_sprite(t_sprite_list *sprite_pos)
+void draw_sprite(t_sprite_array *sprite_pos)
 {
-  sp->sprite_x = sprite_pos->x - (win->player->pos_x - 0.5);
-  sp->sprite_y = sprite_pos->y - (win->player->pos_y - 0.5);
+  s_draw->sprite_x = sprite_pos->x - (player->pos_x - 0.5);
+  s_draw->sprite_y = sprite_pos->y - (player->pos_y - 0.5);
   calcul_values();
 
-  while (sp->stripe < sp->draw_end_x)
+  while (s_draw->stripe < s_draw->draw_end_x)
 	{
-		sp->tex_x = (int)(win->sprite->size_line * (sp->stripe - (-sp->sprite_width / 2 + sp->sprite_screen_x)) * win->sprite->width / sp->sprite_width) / win->sprite->size_line;
-		if (sp->transform_y > 0 && sp->stripe > 0 && sp->stripe < win->width && sp->transform_y < ray->z_buffer[sp->stripe])
+		s_draw->tex_x = (int)(s_texture->size_line * (s_draw->stripe - (-s_draw->sprite_width / 2 + s_draw->sprite_screen_x)) * s_texture->width / s_draw->sprite_width) / s_texture->size_line;
+		if (s_draw->transform_y > 0 && s_draw->stripe > 0 && s_draw->stripe < win->width && s_draw->transform_y < ray->z_buffer[s_draw->stripe])
 		{
-			sp->y = sp->draw_start_y;
-			while (sp->y < sp->draw_end_y)
+			s_draw->y = s_draw->draw_start_y;
+			while (s_draw->y < s_draw->draw_end_y)
 			{
 				pix_on_sprite_image();
-				if (sp->totcolor != 0)
+				if (s_draw->totcolor != 0)
 					is_black();
-				sp->y++;
+				s_draw->y++;
 			}
 		}
-		sp->stripe++;
+		s_draw->stripe++;
 	}
 }
 
@@ -99,15 +99,17 @@ void diplay_sprite(void)
   int cmp;
 
   cmp = 0;
-  if (win->displayable_sprite)
+  if (s_displayable)
   {
-    sp = malloc(sizeof(t_draw_sprites));
-    sp->sprite_list = malloc(sizeof(t_sprite_list *) * (win->have_sprite + 1));
-    into_list();
+    if(!(s_draw = malloc(sizeof(t_draw))))
+			exit_game("Error\nMemory allocation error\n");
+    if (!(s_array = malloc(sizeof(t_sprite_array *) * (win->have_sprite + 1))))
+			exit_game("Error\nMemory allocation error\n");
+    sprites_into_array();
     sort_displayable_sprites();
-    while (sp->sprite_list[cmp]->x != -1)
+    while (s_array[cmp]->x != -1)
     {
-      draw_sprite(sp->sprite_list[cmp]);
+      draw_sprite(s_array[cmp]);
       cmp++;
     }
   }

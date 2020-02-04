@@ -1,17 +1,4 @@
-#include "../includes/second_cube.h"
-
-int is_rgb(char *str)
-{
-  if (str[0] == 'F' || str[0] == 'C')
-  {
-    if (str[0] == 'F' && config->rgb_f == 1)
-      exit_game("rgb floor already set\n");
-    else if (str[0] == 'C' && config->rgb_c == 1)
-      exit_game("rgb ceiling already set\n");
-    return (OK);
-  }
-  return (KO);
-}
+#include "../includes/cub3D.h"
 
 int create_rgb(int color_value, int rgb, char color, char type)
 {
@@ -26,6 +13,41 @@ int create_rgb(int color_value, int rgb, char color, char type)
   return (KO);
 }
 
+char set_color(int index)
+{
+  if (index == 0)
+    return ('r');
+  else if (index == 1)
+    return ('g');
+  else
+    return ('b');
+}
+
+void set_color_value(char *str, char color, char type)
+{
+  if (str[0] >= '0' && str[0] <= '9')
+  {
+    if (type == 'F')
+      win->floor_color = create_rgb(ft_atoi_cub(str), win->floor_color, color, type);
+    else if (type == 'C')
+      win->ceiling_color = create_rgb(ft_atoi_cub(str), win->floor_color, color, type);
+  }
+  else
+    error_before_rgb_value(str[0], color, type);
+}
+
+void end_parse_rgb(char type, char last)
+{
+  if (type == 'F')
+    config->rgb_f = 1;
+  else if (type == 'C')
+    config->rgb_c = 1;
+  if (last != '\0' && type == 'F')
+    exit_game("Error\nInvalid caracter after floor RGB\n");
+  else if (last != '\0' && type == 'C')
+    exit_game("Error\nInvalid caracter after ceiling RGB\n");
+}
+
 void parse_rgb(char *str)
 {
   int cmp;
@@ -38,40 +60,15 @@ void parse_rgb(char *str)
     cmp++;
   while ((config->rgb_f != 1 && str[0] == 'F') || (config->rgb_c != 1 && str[0] == 'C'))
   {
-    if (index == 0)
-      color = 'r';
-    else if (index == 1)
-      color = 'g';
-    else if (index == 2)
-      color = 'b';
-    while (str[cmp] == ' ')
-      cmp++;
-    if (str[cmp] >= '0' && str[cmp] <= '9')
-    {
-      if (str[0] == 'F')
-      {
-        win->floor_color = create_rgb(ft_atoi_cub(&str[cmp]), win->floor_color, color, str[0]);
-      }
-      else if (str[0] == 'C')
-      {
-        win->ceiling_color = create_rgb(ft_atoi_cub(&str[cmp]), win->floor_color, color, str[0]);
-      }
-    }
-    else
-      error_before_rgb_value(str[cmp], color, str[0]);
-    while (str[cmp] >= '0' && str[cmp] <= '9')
-      cmp++;
-    while (str[cmp] == ' ')
-      cmp++;
+    color = set_color(index);
+    cmp += browse_space(&str[cmp]);
+    set_color_value(&str[cmp], color, str[0]);
+    cmp += browse_number(&str[cmp]);
+    cmp += browse_space(&str[cmp]);
     if (index == 2)
       break ;
     cmp += check_coma_between_rgb(str[cmp], color, str[0]);
     index++;
   }
-  if (str[0] == 'F')
-    config->rgb_f = 1;
-  if (str[0] == 'C')
-    config->rgb_c = 1;
-  if (str[cmp] != '\0')
-    exit_game("caractere invalide post rgb\n");
+  end_parse_rgb(str[0], str[cmp]);
 }

@@ -1,4 +1,4 @@
-#include "../includes/second_cube.h"
+#include "../includes/cub3D.h"
 
 int is_texture(char *str)
 {
@@ -15,47 +15,57 @@ int is_texture(char *str)
   else
     return (KO);
   if (index == 0 && config->texture_no == 1)
-    exit_game("Texture NORD déjà définie\n");
+    exit_game("Error\nNorth texture already defined\n");
   else if (index == 1 && config->texture_so == 1)
-    exit_game("Texture SUD déjà définie\n");
-  else if (index == 2 && config->texture_we == 1)
-    exit_game("Texture OUEST déjà définie\n");
+    exit_game("Error\nSouth texture already defined\n");
   else if (index == 3 && config->texture_ea == 1)
-    exit_game("Texture EST déjà définie\n");
+    exit_game("Error\nEast texture already defined\n");
+  else if (index == 2 && config->texture_we == 1)
+    exit_game("Error\nWest texture already defined\n");
+
   return (index);
+}
+
+void texture_extension(char *str)
+{
+  int len;
+
+  len = ft_strlen(str);
+  if (str[len - 4] != '.' && str[len - 3] != 'x' && str[len - 2] != 'p' && str[len - 1] != 'm')
+    exit_game("Error\nInvalid wall texture file extension\nExpected etension : .xpm\n");
+}
+
+void open_texture_file(char *path, int index)
+{
+  if (open(path, O_RDONLY) == -1)
+    exit_game("Error\nWall texture file can't be open\n");
+  else
+    init_texture(path, index);
 }
 
 void parse_texture(char *str, int index)
 {
-  int cmp;
-  int cmp_2;
-  int len;
+  int cmp_str;
+  int cmp_path;
   char *path;
 
-  cmp = 2;
-  len = ft_strlen(str);
-  if (str[len - 4] != '.' && str[len - 3] != 'x' && str[len - 2] != 'p' && str[len - 1] != 'm')
-    exit_game("Extension du fichier de texture invalide\nExtension attendue : .xpm");
-  while (str[cmp] == ' ')
-    cmp++;
-  cmp_2 = 0;
-  if (str[cmp] == '.')
+  cmp_str = 2;
+  cmp_path = 0;
+  texture_extension(str);
+  cmp_str += browse_space(&str[cmp_str]);
+  if (str[cmp_str] == '.')
   {
-    path = (char *)malloc(sizeof(char) * (len - cmp + 1));
-    while (str[cmp] >= ' ' && str[cmp] <= '~')
+    if (!(path = (char *)malloc(sizeof(char) * (ft_strlen(str) - cmp_str + 1))))
+      exit_game("Error\nMemory allocation error\n");
+    while (str[cmp_str] >= ' ' && str[cmp_str] <= '~')
     {
-      path[cmp_2] = str[cmp];
-      cmp_2++;
-      cmp++;
+      path[cmp_path] = str[cmp_str];
+      cmp_path++;
+      cmp_str++;
     }
-    path[cmp_2] = '\0';
-    if (open(path, O_RDONLY) == -1)
-    {
-      exit_game("Fichier de texture introuvable\n");
-    }
-    else
-      init_texture(path, index);
+    path[cmp_path] = '\0';
+    open_texture_file(path, index);
   }
   else
-    exit_game("caractere entre indice et path\n");
+    exit_game("Error\nInvalid caracter before wall texture file path\n");
 }
