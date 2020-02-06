@@ -1,22 +1,18 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <string.h>
 # include <math.h>
 # include <time.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include "../libraries/minilibx/mlx.h"
-//# include "../libraries/libft/libft.a"
-# include "../get_next_line/get_next_line.h"
+# include "../includes/mlx.h"
+# include "../srcs/get_next_line/get_next_line.h"
 
 
 # define OK 1
 # define KO -1
-
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
@@ -26,6 +22,7 @@
 # define KEY_R 15
 # define KEY_LEFT 123
 # define KEY_RIGHT 124
+# define KEY_ESC 53
 
 
 typedef struct s_map
@@ -61,7 +58,6 @@ typedef struct s_player
   double rotate_speed;
   double speed;
   double cam_height;
-//  int health;
 } t_player;
 
 typedef struct s_config
@@ -99,18 +95,16 @@ typedef struct			s_draw
 	double				transform_y;
 	int					sprite_screen_x;
 	int					sprite_height;
-	int					draw_start_y;
-	int					draw_end_y;
+	int					start_y;
+	int					end_y;
 	int					sprite_width;
-	int					draw_start_x;
-	int					draw_end_x;
-	int					stripe;
+	int					start_x;
+	int					end_x;
 	int					y;
-	int					d;
+	int					coef;
 	int					tex_x;
 	int					tex_y;
-	int					color;
-	int					totcolor;
+	int					pix_color;
 } t_draw;
 
 typedef struct s_displayable_sprites
@@ -118,7 +112,6 @@ typedef struct s_displayable_sprites
   int x;
   int y;
   struct s_displayable_sprites *next;
-
 } t_displayable_sprites;
 
 typedef struct s_sprite_array
@@ -151,16 +144,6 @@ typedef struct			s_ray
 	double				*z_buffer;
 }	t_ray;
 
-typedef struct			s_line
-{
-	int					x;
-	int					y;
-	int					y0;
-	int					y1;
-	int					tex_x;
-	int					tex_y;
-}						t_line;
-
 typedef struct s_win
 {
   void *mlx_ptr;
@@ -170,6 +153,7 @@ typedef struct s_win
   int floor_color;
   int ceiling_color;
   int have_sprite;
+  int save;
 } t_win;
 
 t_win *win;
@@ -213,7 +197,7 @@ void display_vertical_color(int color, int y_start, int y_end);
 //display_sprite
 void			calcul_values(void);
 void			pix_on_sprite_image(void);
-void			is_black(void);
+void			pix_to_be_diplay(void);
 void draw_sprite(t_sprite_array *sprite_pos);
 void diplay_sprite(void);
 
@@ -238,7 +222,7 @@ void free_elements(void);
 void exit_game(char *str);
 
 //init_struct
-void init_win(void);
+void init_win(int argc, char **argv);
 void init_map(void);
 void init_key(void);
 void init_player(void);
@@ -249,6 +233,7 @@ void init_texture(char *path, int index);
 //init_struct_2
 void init_ray(void);
 void init_ray_values(void);
+void set_win_and_img(void);
 
 
 /*MANAGERS*/
@@ -269,6 +254,12 @@ void add_displayable_sprite(void);
 void sort_displayable_sprites(void);
 void free_diplayed_sprites(void);
 void sprites_into_array(void);
+
+//create_bitmap
+void set_bitmap_header(int fd, int bmp_size, int totalheader_size);
+void set_bitmap_infoheader(int fd, int infoheader_size);
+void set_data_bitmap(int fd);
+void create_bitmap(void);
 
 
 /*PARSING*/
@@ -326,6 +317,6 @@ void texture_extension(char *str);
 void open_texture_file(char *path, int index);
 void parse_texture(char *str, int index);
 
-
+void create_bitmap(void);
 
 #endif
