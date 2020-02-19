@@ -1,9 +1,17 @@
-#include "../../includes/cub3D.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajeannot <ajeannot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/06 19:10:47 by ajeannot          #+#    #+#             */
+/*   Updated: 2020/02/07 14:38:53 by ajeannot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/* Initialisation des events */
+#include "../../includes/cub3d.h"
 
-/* Events lorsque l'utilisateur presse une touche */
-/* Lorsqu'une touche est pressée alors la variable correspondante est set à 1 dans la structure g_key */
 int		key_pressed(int key)
 {
 	if (key == KEY_ESC)
@@ -20,13 +28,11 @@ int		key_pressed(int key)
 		g_key->turn_left = 1;
 	else if ((key == KEY_RIGHT || key == KEY_E) && g_key->turn_right == 0)
 		g_key->turn_right = 1;
-  else if (key == KEY_R)
-		player->speed = 0.5;
+	else if (key == KEY_R)
+		g_player->speed = 0.5;
 	return (1);
 }
 
-/* Events lorsque l'utilisateur relache une touche */
-/* Lorsqu'une touche n'est plus pressée alors la variable correspondante est set à 0 dans la structure g_key */
 int		key_released(int key)
 {
 	if (key == KEY_W && g_key->toward == 1)
@@ -41,15 +47,13 @@ int		key_released(int key)
 		g_key->turn_left = 0;
 	else if ((key == KEY_RIGHT || key == KEY_E) && g_key->turn_right == 1)
 		g_key->turn_right = 0;
-  else if (key == KEY_R)
-		player->speed = 0.25;
-
+	else if (key == KEY_R)
+		g_player->speed = 0.25;
 	return (1);
 }
 
-/* Events lorsque l'utilisateur clique sur la croix de fermeture de la fenetre*/
 int		end_game(void)
 {
-  exit_game(NULL);
-  return (1);
+	exit_game(NULL);
+	return (1);
 }

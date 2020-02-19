@@ -3,23 +3,27 @@ NAME = Cub3D
 NAME_LIBFT = libft.a
 LIBFT_DIR = ./libraries/libft/
 
-SRCS = 		cub3D.c \
+SRCS = 				cub3d.c \
 					srcs/annexes/annexes.c \
+					srcs/annexes/annexes_2.c \
 					srcs/engine/display_walls.c \
 					srcs/engine/display_floor_and_ceiling.c \
 					srcs/engine/display_sprites.c \
+					srcs/engine/display_sprites_2.c \
 					srcs/engine/raycasting.c \
 					srcs/get_next_line/get_next_line.c \
 					srcs/get_next_line/get_next_line_utils.c \
 					srcs/init_and_events/events.c \
 					srcs/init_and_events/init_struct.c \
 					srcs/init_and_events/init_struct_2.c \
+					srcs/init_and_events/init_struct_texture.c \
 					srcs/managers/create_bitmap.c \
 					srcs/managers/manage_camera.c \
 					srcs/managers/manage_exit.c \
 					srcs/managers/manage_keys.c \
 					srcs/managers/manage_motion.c \
 					srcs/managers/manage_sprites.c \
+					srcs/managers/free_sprites.c \
 					srcs/parsing/error_config.c \
 					srcs/parsing/error_map.c \
 					srcs/parsing/error_rgb.c \

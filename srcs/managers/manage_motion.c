@@ -1,33 +1,53 @@
-#include "../../includes/cub3D.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_motion.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajeannot <ajeannot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/07 11:33:21 by ajeannot          #+#    #+#             */
+/*   Updated: 2020/02/08 18:46:05 by ajeannot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	move_forward(void)
+#include "../../includes/cub3d.h"
+
+void	forward(void)
 {
-	if (map->map_array[(int)player->pos_y][(int)(player->pos_x + player->dir_x * player->speed)] == '0')
-		player->pos_x += player->dir_x * player->speed;
-	if (map->map_array[(int)(player->pos_y + player->dir_y * player->speed)][(int)player->pos_x] == '0')
-		player->pos_y += player->dir_y * player->speed;
+	if (g_map->map_array[(int)g_player->pos_y][(int)(g_player->pos_x
+	+ g_player->dir_x * g_player->speed)] == '0')
+		g_player->pos_x += g_player->dir_x * g_player->speed;
+	if (g_map->map_array[(int)(g_player->pos_y + g_player->dir_y
+	* g_player->speed)][(int)g_player->pos_x] == '0')
+		g_player->pos_y += g_player->dir_y * g_player->speed;
 }
 
-void	move_backward(void)
+void	backward(void)
 {
-	if (map->map_array[(int)player->pos_y][(int)(player->pos_x - player->dir_x * player->speed)] == '0')
-		player->pos_x -= player->dir_x * player->speed;
-	if (map->map_array[(int)(player->pos_y - player->dir_y * player->speed)][(int)player->pos_x] == '0')
-		player->pos_y -= player->dir_y * player->speed;
+	if (g_map->map_array[(int)g_player->pos_y][(int)(g_player->pos_x
+	- g_player->dir_x * g_player->speed)] == '0')
+		g_player->pos_x -= g_player->dir_x * g_player->speed;
+	if (g_map->map_array[(int)(g_player->pos_y - g_player->dir_y
+	* g_player->speed)][(int)g_player->pos_x] == '0')
+		g_player->pos_y -= g_player->dir_y * g_player->speed;
 }
 
-void	move_left(void)
+void	left(void)
 {
-	if (map->map_array[(int)player->pos_y][(int)(player->pos_x - player->plane_x * player->speed)] == '0')
-		player->pos_x -= player->plane_x * player->speed;
-	if (map->map_array[(int)(player->pos_y - player->plane_y * player->speed)][(int)player->pos_x] == '0')
-		player->pos_y -= player->plane_y * player->speed;
+	if (g_map->map_array[(int)g_player->pos_y][(int)(g_player->pos_x
+	- g_player->plane_x * g_player->speed)] == '0')
+		g_player->pos_x -= g_player->plane_x * g_player->speed;
+	if (g_map->map_array[(int)(g_player->pos_y - g_player->plane_y
+	* g_player->speed)][(int)g_player->pos_x] == '0')
+		g_player->pos_y -= g_player->plane_y * g_player->speed;
 }
 
-void	move_right(void)
+void	right(void)
 {
-	if (map->map_array[(int)player->pos_y][(int)(player->pos_x + player->plane_x * player->speed)] == '0')
-		player->pos_x += player->plane_x * player->speed;
-	if (map->map_array[(int)(player->pos_y + player->plane_y * player->speed)][(int)player->pos_x] == '0')
-		player->pos_y += player->plane_y * player->speed;
+	if (g_map->map_array[(int)g_player->pos_y][(int)(g_player->pos_x
+	+ g_player->plane_x * g_player->speed)] == '0')
+		g_player->pos_x += g_player->plane_x * g_player->speed;
+	if (g_map->map_array[(int)(g_player->pos_y + g_player->plane_y
+	* g_player->speed)][(int)g_player->pos_x] == '0')
+		g_player->pos_y += g_player->plane_y * g_player->speed;
 }

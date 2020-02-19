@@ -6,7 +6,7 @@
 /*   By: ajeannot <ajeannot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:00:36 by ajeannot          #+#    #+#             */
-/*   Updated: 2020/02/04 16:37:47 by ajeannot         ###   ########.fr       */
+/*   Updated: 2020/02/08 18:46:11 by ajeannot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ char	*ft_dup(const char *str, int len, void *free_str)
 	if (!str)
 	{
 		if (!(new_str = (char *)malloc(sizeof(char) * 1)))
-    	return (NULL);
+			return (NULL);
 		new_str[0] = '\0';
 	}
 	else
 	{
 		if (!(new_str = (char *)malloc(sizeof(char) * (len + 1))))
-    	return (NULL);
+			return (NULL);
 		cmp = 0;
 		while (cmp < len)
 		{

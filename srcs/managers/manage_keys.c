@@ -1,20 +1,31 @@
-#include "../../includes/cub3D.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_keys.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajeannot <ajeannot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/07 11:32:42 by ajeannot          #+#    #+#             */
+/*   Updated: 2020/02/08 18:51:28 by ajeannot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int		key_manager(void)
+#include "../../includes/cub3d.h"
+
+void	key_manager(void)
 {
 	if (g_key->exit == 1)
-    exit_game(NULL);
+		exit_game(NULL);
 	if (g_key->toward == 1)
-		move_forward();
+		forward();
 	if (g_key->backward == 1)
-		move_backward();
+		backward();
 	if (g_key->left == 1)
-		move_left();
+		left();
 	if (g_key->right == 1)
-		move_right();
+		right();
 	if (g_key->turn_left == 1)
 		turn_left();
 	if (g_key->turn_right == 1)
 		turn_right();
-	return (1);
 }

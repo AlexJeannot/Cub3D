@@ -1,73 +1,118 @@
-#include "../../includes/cub3D.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_exit.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajeannot <ajeannot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/07 11:26:39 by ajeannot          #+#    #+#             */
+/*   Updated: 2020/02/12 10:11:11 by ajeannot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void free_textures(void)
+#include "../../includes/cub3d.h"
+
+void	free_path_textures(void)
 {
-  int cmp;
-
-  cmp = 0;
-  if (textures)
-  {
-    while (cmp < 4)
-    {
-      free(textures[cmp]);
-      cmp++;
-    }
-    free(textures);
-  }
+	if (g_textures)
+	{
+		if (g_config->texture_no == 1 && g_textures[0]->path)
+			free(g_textures[0]->path);
+		if (g_config->texture_so == 1 && g_textures[1]->path)
+			free(g_textures[1]->path);
+		if (g_config->texture_we == 1 && g_textures[2]->path)
+			free(g_textures[2]->path);
+		if (g_config->texture_ea == 1 && g_textures[3]->path)
+			free(g_textures[3]->path);
+	}
 }
 
-void free_elements(void)
+void	free_textures(void)
 {
-  int cmp;
-
-  cmp = 0;
-  if (win)
-    free(win);
-  while (cmp < map->height)
-  {
-    if (map->map_array[cmp])
-      free(map->map_array[cmp]);
-    cmp++;
-  }
-  if (map->map_array)
-    free(map->map_array);
-  if (map)
-    free(map);
-  if (g_key)
-    free(g_key);
-  if (player)
-    free(player);
-  if (img)
-    free(img);
-  if (ray && ray->z_buffer)
-    free(ray->z_buffer);
-  if (ray)
-    free(ray);
-  if (s_texture)
-    free(s_texture);
-  if (s_draw)
-    free(s_draw);
-  if (config)
-    free(config);
-  free_diplayed_sprites();
-  free_textures();
+	free_path_textures();
+	if (g_textures)
+	{
+		if (g_config)
+		{
+			if (g_config->texture_no == 1)
+				free(g_textures[0]);
+			if (g_config->texture_so == 1)
+				free(g_textures[1]);
+			if (g_config->texture_we == 1)
+				free(g_textures[2]);
+			if (g_config->texture_ea == 1)
+				free(g_textures[3]);
+		}
+		free(g_textures);
+	}
 }
 
-void exit_game(char *str)
+void	free_struct(void)
 {
-  int cmp;
+	if (g_map)
+		free(g_map);
+	if (g_key)
+		free(g_key);
+	if (g_player)
+		free(g_player);
+	if (g_img)
+		free(g_img);
+	if (g_ray)
+		free(g_ray);
+	if (g_s_texture)
+	{
+		if (g_s_texture->path)
+			free(g_s_texture->path);
+		free(g_s_texture);
+	}
+	if (g_win)
+		free(g_win);
+	if (g_config)
+		free(g_config);
+}
 
-  cmp = 0;
-  if (str)
-  {
-      while (str[cmp])
-      {
-        write(1, &str[cmp], 1);
-        cmp++;
-      }
-  }
-  if (win && win->mlx_ptr && win->win_ptr)
-    mlx_destroy_window(win->mlx_ptr, win->win_ptr);
-  free_elements();
-  exit(1);
+void	free_elements(void)
+{
+	int	cmp;
+
+	cmp = 0;
+	if (g_map && g_map->map_array)
+	{
+		while (cmp < g_map->height)
+		{
+			if (g_map->map_array[cmp])
+				free(g_map->map_array[cmp]);
+			cmp++;
+		}
+	}
+	if (g_ray && g_ray->z_buffer)
+		free(g_ray->z_buffer);
+	if (g_map && g_map->map_str)
+		free(g_map->map_str);
+	if (g_map && g_map->map_array)
+		free(g_map->map_array);
+	if (g_s_draw)
+		free(g_s_draw);
+	free_diplayed_sprites();
+	free_textures();
+	free_struct();
+}
+
+void	exit_game(char *str)
+{
+	int cmp;
+
+	cmp = 0;
+	if (str)
+	{
+		while (str[cmp])
+		{
+			write(1, &str[cmp], 1);
+			cmp++;
+		}
+	}
+	if (g_win && g_win->win_set == 1)
+		mlx_destroy_window(g_win->mlx_ptr, g_win->win_ptr);
+	free_elements();
+	exit(1);
 }
